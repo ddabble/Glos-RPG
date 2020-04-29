@@ -1,0 +1,16 @@
+{
+  "source": "Unity",
+  "applications": [
+    {
+      "app_key": "application.generated.unity.11_ntnu_treadmill.exe",
+      "launch_type": "url",
+      "url": "steam://launch/",
+      "action_manifest_path": "C:\\Users\\Eirik\\Documents\\NTNU\\it2901\\11_ntnu_treadmill\\11_NTNU_treadmill\\Assets\\StreamingAssets\\SteamVR\\actions.json",
+      "strings": {
+        "en_us": {
+          "name": "11_NTNU_treadmill [Testing]"
+        }
+      }
+    }
+  ]
+}

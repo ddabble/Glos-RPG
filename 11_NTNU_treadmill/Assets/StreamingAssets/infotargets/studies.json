@@ -1,0 +1,38 @@
+{"infoTargets": [
+  {
+    "name": "One-year programme",
+    "information": "One-year programmes are for those who want a short introduction to a field of study or need a few required courses for their main study.",
+    "lat": 63.419750,
+    "lon": 10.402918
+  },
+  {
+    "name": "Bachelor programme",
+    "information": "A bachelorprogramme often gives a wide-reaching introduction to its field of study, and allow for some specialization.",
+    "lat": 63.418575,
+    "lon": 10.402244
+  },
+  {
+    "name": "Master's degree programme",
+    "information": "A Master's degree gives you expert knowledge and research-competence within a specialized area of your field of study.",
+    "lat": 63.419240,
+    "lon": 10.403092
+  },
+  {
+    "name": "Engineering degrees",
+    "information": "Engineering degrees provide knowledge within matematics and physics alongside your chosen field of study.",
+    "lat": 63.418037,
+    "lon": 10.402642
+  },
+  {
+    "name": "Studies at NTNU",
+    "information": "NTNU offers studies in art, humanities, economics, technology, natural science and much more.",
+    "lat": 63.417451,
+    "lon": 10.403267
+  },
+  {
+    "name": "Gløshaugen",
+    "information": "At Gløshaugen campus the main fields of study are architecture, design, natural science and technology.",
+    "lat": 63.416467,
+    "lon": 10.404323
+  }
+]}

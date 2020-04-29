@@ -1,0 +1,68 @@
+{"infoTargets": [
+  {
+    "name": "Sentralbygget - The Hangar",
+    "information": "Hangaren is one of NTNU's largest cantines with a new dinner buffet, and much more, every day.",
+    "lat": 63.416604,
+    "lon": 10.405
+  },
+  {
+    "name": "Frimerket",
+    "information": "In the autumn, a large tent is erected to host the yearly career days where students can meet exciting employers.",
+    "lat": 63.418382,
+    "lon": 10.403367
+  },
+  {
+    "name": "Frimerket",
+    "information": "Before the autumn semester starts, all new students are invited to the matriculation to mark the new year at NTNU.",
+    "lat": 63.418748,
+    "lon": 10.402626
+  },
+  {
+    "name": "Sentralbygget",
+    "information": "If you ever need a break from your studies, Sentralbygget has a room ready with board games and table tennis.",
+    "lat": 63.416918,
+    "lon": 10.404233
+  },
+  {
+    "name": "Sentralbygget - Akademika",
+    "information": "At Akademika you can buy course curriculum, stationery, NTNU merch, and much more.",
+    "lat": 63.416931,
+    "lon": 10.405150
+  },
+  {
+    "name": "Sentralbygget - Stripa",
+    "information": "At Stripa you will always find student organizations who ask for your attention (and maybe offer a gift in return).",
+    "lat": 63.418231,
+    "lon": 10.403218
+  },
+  {
+    "name": "Orientation week",
+    "information": "New students are invited to orientation week to meet new friends, attend activities, and familiarize with the campus.",
+    "lat": 63.419615,
+    "lon": 10.400485
+  },
+  {
+    "name": "The courses",
+    "information": "Students usually have 4 courses per semester with exams in each course.",
+    "lat": 63.416235,
+    "lon": 10.403558
+  },
+  {
+    "name": "Assignments",
+    "information": "In addition to 1-2 lectures a week, most courses have weekly or bi-weekly assignments.",
+    "lat": 63.416287,
+    "lon": 10.405309
+  },
+  {
+    "name": "Student advisors",
+    "information": "Student advisors can help you with questions or adaptations to your program of study.",
+    "lat": 63.417922,
+    "lon": 10.402931
+  },
+  {
+    "name": "Student unions",
+    "information": "Every study programme has a student union, led by its students, which hosts activities and presentations throughout the year.",
+    "lat": 63.418088,
+    "lon": 10.404084
+  }
+]}

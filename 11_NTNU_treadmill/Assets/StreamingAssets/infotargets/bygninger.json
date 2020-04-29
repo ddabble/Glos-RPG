@@ -1,0 +1,68 @@
+{"infoTargets": [
+  {
+    "name": "Hovedbygget",
+    "information": "Visste du at inngangsromet til hovedbygingen, et enormt hvelv, er 21m høyt og 18m i diameter?",
+    "lat": 63.419611,
+    "lon": 10.401720
+  },
+  {
+    "name": "Velkommen til NTNU Campus VR",
+    "information": "NTNU har lokaler over hele Trondheim, i Gjøvik og i Ålesund. Her kan du utforske NTNUs største campus, Gløshaugen i Trondheim.",
+    "lat": 63.419739,
+    "lon": 10.401527
+  },
+  {
+    "name": "Elbygget",
+    "information": "Elbyggets design, særlig glasstakene og veggene, ser man også ved NTNU Dragvoll, campus for humaniora og samfunnsvitenskap",
+    "lat": 63.418094,
+    "lon": 10.402208
+  },
+  {
+    "name": "IT-Bygget F1",
+    "information": "Her ligger F1 Gløshaugens største auditorium, med plass til 500 studenter.",
+    "lat": 63.416623,
+    "lon": 10.403555
+  },
+  {
+    "name": "IT-Bygget",
+    "information": "It-bygget er full av sitteplasser i inngangen, en av dem er en Cray superdatamaskin fra 90-tallet",
+    "lat": 63.416748,
+    "lon": 10.403406
+  },
+  {
+    "name": "Skiboli",
+    "information": "Navnet Skiboli kommer av Skivebolig, altså bolig mellom murte skiver.",
+    "lat": 63.417020,
+    "lon": 10.405615
+  },
+  {
+    "name": "Høyskoleringen 3",
+    "information": "Bygningen omtales gjerne som P15, etter parkeringsplassen som stod der før.",
+    "lat": 63.418016,
+    "lon": 10.405668
+  },
+  {
+    "name": "Vannkraftlaboratoriet",
+    "information": "Laboratoriet har testutstyr for tre forskjellige typer vannturbiner som brukes av både master og doktorgradsstudenter.",
+    "lat": 63.417344,
+    "lon": 10.404951
+  },
+  {
+    "name": "Statuen Integrasjon",
+    "information": "Laget av Arnold Haukeland. Statuen var en gave fra Freia, og har en 6m høy storebror utenfor Freias lokaler i Oslo.",
+    "lat": 63.416762,
+    "lon": 10.403892
+  },
+  {
+    "name": "Infohuset",
+    "information": "Ble opprinnelig bygd som bolig for overlærer ved Statens taleskole for døve.",
+    "lat": 63.419334,
+    "lon": 10.400449
+  },
+  {
+    "name": "Strømningsteknisk",
+    "information": "Laben her inneholder Norges største vindtunnel med et testareal på 6 kvadratmeter.",
+    "lat": 63.418524,
+    "lon": 10.404909
+  }
+]}

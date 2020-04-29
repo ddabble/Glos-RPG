@@ -1,0 +1,10 @@
+image: ubuntu
+
+pages:
+  stage: deploy
+  script:
+    - mkdir public
+    - cp -r _site/* public
+  artifacts:
+    paths:
+      - public

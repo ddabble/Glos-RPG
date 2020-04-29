@@ -1,0 +1,32 @@
+{"infoTargets": [
+  {
+    "name": "NTH",
+    "information": "A new college in Trondheim was approved in 1900. This became The Norwegian Institute of Technology (NTH) at Gløshaugen.\nIt was officialy opened by King Haakon VII in 1910.",
+    "lat": 63.418867,
+    "lon": 10.401593
+  },
+  {
+    "name": "SINTEF",
+    "information": "In 1950, SINTEF was founded as a link between NTH and Norwegian industry.",
+    "lat": 63.417704,
+    "lon": 10.402715
+  },
+  {
+    "name": "UNIT",
+    "information": "In 1968 NTH, AVH (Norwegian College of General Sciences) and the Science Museum formed the University in Trondheim (UNIT).",
+    "lat": 63.416092,
+    "lon": 10.404716
+  },
+  {
+    "name": "NTNU",
+    "information": "NTNU was established in 1996 after merging UNIT with three other research and higher educational institutions in Trondheim.",
+    "lat": 63.417496,
+    "lon": 10.405554
+  },
+  {
+    "name": "Fusion",
+    "information": "In January 2016, NTNU became Norways largest university when it merged with the colleges of Sør-Trøndelag, Ålesund and Gjøvik.",
+    "lat": 63.418296,
+    "lon": 10.404120
+  }
+]}

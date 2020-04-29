@@ -1,0 +1,32 @@
+{"infoTargets": [
+  {
+    "name": "NTH",
+    "information": "En ny høyskole i Trondheim ble vedtatt i 1900. Dette ble Norges Tekniske Høyskole (NTH) på Gløshaugen.\nSkolen ble offisielt åpnet av Kong Haakon VII i 1910.",
+    "lat": 63.418867,
+    "lon": 10.401593
+  },
+  {
+    "name": "SINTEF",
+    "information": "I 1950 ble SINTEF etablert for å knytte NTH til den norske industrien.",
+    "lat": 63.417704,
+    "lon": 10.402715
+  },
+  {
+    "name": "UNIT",
+    "information": "I 1968 ble NTH, AVH (Den allmennvitenskapelige høgskole) og Vitenskapsmusset slått sammen til Universitetet i Trondheim, eller UNIT.",
+    "lat": 63.416092,
+    "lon": 10.404716
+  },
+  {
+    "name": "NTNU",
+    "information": "NTNU ble etablert i 1996 som en sammenslåing av Universitetet i Trondheim med tre andre forskings og høyere utdannings institutt i Trondheim.",
+    "lat": 63.417496,
+    "lon": 10.405554
+  },
+  {
+    "name": "Fusjon",
+    "information": "I januar 2016 ble NTNU Norges største universitet etter sammenslåingen med høyskolene i Sør-Trøndelag, Ålesund og Gjøvik.",
+    "lat": 63.418296,
+    "lon": 10.404120
+  }
+]}
