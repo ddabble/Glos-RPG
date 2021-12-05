@@ -132,7 +132,7 @@ namespace Valve.VR.Extras
                 dist = hit.distance;
             }
 
-            if (bHit && (interactWithUI.GetStateUp(pose.inputSource) || Input.GetKeyUp(KeyCode.Space)))
+            if (bHit && interactWithUI.GetStateUp(pose.inputSource))
             {
                 PointerEventArgs argsClick = new PointerEventArgs();
                 argsClick.fromInputSource = pose.inputSource;
