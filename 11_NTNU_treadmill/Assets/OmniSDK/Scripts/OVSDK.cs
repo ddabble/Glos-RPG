@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 using System.IO;
 using System;
 using UnityEngine.UI;
-using UnityEngine.VR;
+using UnityEngine.XR;
 using System.Xml;
 using System.Collections.Generic;
 

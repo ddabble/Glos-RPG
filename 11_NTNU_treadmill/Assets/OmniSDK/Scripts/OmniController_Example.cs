@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.VR;
+using UnityEngine.XR;
 using UnityEngine;
 
 /*
@@ -53,7 +53,7 @@ public class OmniController_Example : MonoBehaviour {
     {
         if(!RotationCorrected)
         {
-            if(UnityEngine.XR.XRDevice.isPresent)
+            if(XRUtil.XRDeviceIsPresent())
                 CorrectSpawnForward();
         }
 

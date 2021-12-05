@@ -4,7 +4,7 @@ using System.IO;
 using System.Threading;
 using System.Runtime.InteropServices;
 using System.Text;
-using UnityEngine.VR;
+using UnityEngine.XR;
 using UnityEngine.UI;
 using System.Collections;
 
@@ -369,7 +369,7 @@ public class OmniMovementComponent : MonoBehaviour {
                 return;
             }
 
-            if (!UnityEngine.XR.XRDevice.isPresent)
+            if (!XRUtil.XRDeviceIsPresent())
             {
                 cameraReference.gameObject.AddComponent<SmoothMouseLook>();
                 Vector3 adjustedCameraPosition = cameraReference.localPosition;
