@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine;
 using System;
 using System.IO;
 using System.Threading;
@@ -7,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using UnityEngine.VR;
 using UnityEngine.UI;
+using System.Collections;
 
 public delegate IntPtr WndProcDelegate(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
 
@@ -84,11 +84,16 @@ public class OmniMovementComponent : MonoBehaviour {
 
     protected bool hasFullyInitialized = false;
 
-    private int debugCounterForDataMessages = 0;
+    //private int debugCounterForDataMessages = 0;
+    private bool debugNotReceivingData = false;
+    private bool hasReceivedOmniData = false;
     private float joystickDeadzone = 0.05f;
 
     private Vector3 forwardMovement;
     private Vector3 strafeMovement;
+    private enum SecureAuthenticationProtocolState { SAPEnabled, SAPDisabled, SAPError };
+    private SecureAuthenticationProtocolState mySAPStatus = SecureAuthenticationProtocolState.SAPError;
+    private int SAPErrorChecks = 0;
 
 
     #region reconnecting logic
@@ -127,11 +132,11 @@ public class OmniMovementComponent : MonoBehaviour {
 
     void Start()
     {
-        Debug.Log(System.DateTime.Now.ToLongTimeString() + ": OmniMovementComponent- Omni SDK Version 2.1.2");
+        Debug.Log(System.DateTime.Now.ToLongTimeString() + ": OmniMovementComponent- Omni/SecureOmni SDK Version 2.3");
 
         if (!Application.isEditor)
         {
-            //developerMode = false;
+            developerMode = false;
         }
 
         OmniInitialize();
@@ -150,6 +155,144 @@ public class OmniMovementComponent : MonoBehaviour {
         newWndProcPtr = Marshal.GetFunctionPointerForDelegate(newWndProc);
         oldWndProcPtr = SetWindowLongPtr(hMainWindow, -4, newWndProcPtr);
         isrunning = true;
+    }
+
+    private IEnumerator ConfigureOmniConnect()
+    {
+        yield return new WaitForSeconds(3f);
+        StartCoroutine(SetGameMode());
+        SAPErrorChecks = 0;
+        mySAPStatus = SecureAuthenticationProtocolState.SAPError;
+        StartCoroutine(VerifySAP());
+        yield return new WaitForSeconds(10f);
+        string systemReadyCheckUrl = "http://localhost:8085/systemReady";
+        string systemReadyWebResponse = "-1";
+        yield return StartCoroutine(OmniConnectWebRequest.CoroutineGetRequest(systemReadyCheckUrl, value => systemReadyWebResponse = value));
+        if (systemReadyWebResponse.Contains("OK;Secure;MotionDisabled"))
+        {
+            Debug.LogError("Authentication Protocol Failed. Your Omni is not registered and therefore cannot be enabled. Please contact your Omni provider to register your Omni.");
+        }
+    }
+
+    private IEnumerator VerifySAP()
+    {
+        SecureAuthenticationProtocolState SAPGetResponse = SecureAuthenticationProtocolState.SAPError;
+        yield return StartCoroutine(GetSecureAuthentication(value => SAPGetResponse = value));
+        mySAPStatus = SAPGetResponse;
+        if (mySAPStatus == SecureAuthenticationProtocolState.SAPEnabled)
+        {
+            Debug.Log("SAP Enabled. Initializing SDK.");
+            /* For Initialization to work, you must create a developer account, and register your game with Virtuix by
+             * emailing your Omni provider. Please provide the serial number for any Omnis that you wish to use for development.*/
+            OVSDK.Init(1000, "01ec17dac7140c0fbe936ee128310000", "omni=1");
+            hasSetCouplingPercentage = false;
+        }
+        else if (mySAPStatus == SecureAuthenticationProtocolState.SAPDisabled)
+        {
+            Debug.Log("SAP Disabled.");
+            hasSetCouplingPercentage = false;
+        }
+        else
+        {
+            if (SAPErrorChecks < 3)
+            {
+                SAPErrorChecks++;
+                yield return new WaitForSeconds(2f);
+                StartCoroutine(VerifySAP());
+            }
+            else
+            {
+                Debug.LogError("There is an error with your configuration in Omni Connect. Ensure that Omni Connect is installed and running on your system. " +
+                "Verify that it is updated to the latest version and that the PODs are connected and on.");
+            }
+        }
+
+    }
+
+    private IEnumerator SetGameMode()
+    {
+        //Check the Game Mode to see if it is already set to "Gamepad"
+        string coroutineUrl = "http://localhost:8085/gamemode";
+        string GameModeGetResponse = "-1";
+        yield return StartCoroutine(OmniConnectWebRequest.CoroutineGetRequest(coroutineUrl, value => GameModeGetResponse = value));
+
+        //Set Game mode to "Gamepad" if it is not already.
+        if (!GameModeGetResponse.Contains("Gamepad") && GameModeGetResponse != "Error")
+        {
+            OmniConnectMode omniConnectMode = new OmniConnectMode
+            {
+                Data = "Gamepad"
+            };
+            string json = JsonUtility.ToJson(omniConnectMode);
+            byte[] pData = Encoding.ASCII.GetBytes(json.ToCharArray());
+            string webPostResponse = "-1";
+            yield return StartCoroutine(OmniConnectWebRequest.CoroutinePostRequest(coroutineUrl, pData, value => webPostResponse = value));
+        }
+    }
+
+    private IEnumerator GetSecureAuthentication(Action<SecureAuthenticationProtocolState> result)
+    {
+        string versionCheckUrl = "http://localhost:8085/version";
+        string versionWebResponse = "-1";
+        yield return StartCoroutine(OmniConnectWebRequest.CoroutineGetRequest(versionCheckUrl, value => versionWebResponse = value));
+
+        string v1 = versionWebResponse[23].ToString() + versionWebResponse[24].ToString() + versionWebResponse[25].ToString() + versionWebResponse[26].ToString() + versionWebResponse[27].ToString() + versionWebResponse[28].ToString() + versionWebResponse[29].ToString();
+        string v2 = "1.3.4.0";
+        var version1 = new Version(v1);
+        var version2 = new Version(v2);
+        var versionComparisonResult = version1.CompareTo(version2);
+
+        //If 1.3.4.0 or newer, use the new healthcheck endpoint.
+        if (versionComparisonResult >= 0)
+        {
+            string healthCheckUrl = "http://localhost:8085/healthcheck";
+            string SACWebResponse = "-1";
+            yield return StartCoroutine(OmniConnectWebRequest.CoroutineGetRequest(healthCheckUrl, value => SACWebResponse = value));
+
+            if (SACWebResponse != "Error")
+            {
+                switch (SACWebResponse[10])
+                {
+                    case 'B':
+                        Debug.Log("Secure Authentication Protocol Enabled");
+                        result(SecureAuthenticationProtocolState.SAPEnabled);
+                        break;
+                    case 'U':
+                        Debug.Log("Secure Authentication Protocol Disabled");
+                        result(SecureAuthenticationProtocolState.SAPDisabled);
+                        break;
+                    case '-':
+                        Debug.Log("Omni Not Connected: Please Connect Omni");
+                        result(SecureAuthenticationProtocolState.SAPError);
+                        break;
+                    default:
+                        Debug.Log("Secure Authentication Protocol check failed. Returned Default.");
+                        result(SecureAuthenticationProtocolState.SAPError);
+                        break;
+                }
+            }
+        }
+
+        //If older than 1.3.4.0, use the old methods.
+        if (versionComparisonResult < 0)
+        {
+            string systemReadyCheckUrl = "http://localhost:8085/systemReady";
+            string systemReadyWebResponse = "-1";
+            yield return StartCoroutine(OmniConnectWebRequest.CoroutineGetRequest(systemReadyCheckUrl, value => systemReadyWebResponse = value));
+
+            if (systemReadyWebResponse.Contains("OK;Unsecure"))
+            {
+                result(SecureAuthenticationProtocolState.SAPDisabled);
+            }
+            else if (systemReadyWebResponse.Contains("OK;Secure"))
+            {
+                result(SecureAuthenticationProtocolState.SAPEnabled);
+            }
+            else
+            {
+                result(SecureAuthenticationProtocolState.SAPError);
+            }
+        }
     }
 
     public Vector3 GetForwardMovement()
@@ -250,6 +393,7 @@ public class OmniMovementComponent : MonoBehaviour {
             omniFound = false;
             return;
         }
+
     }
 
 
@@ -264,7 +408,7 @@ public class OmniMovementComponent : MonoBehaviour {
 
         if (omniManager.FindOmni())
         {
-            Debug.LogError(System.DateTime.Now.ToLongTimeString() + ": OmniMovementComponent(AttemptToReconnectTheOmni) - Successfully found the Omni for reconnect.");
+            Debug.Log(System.DateTime.Now.ToLongTimeString() + ": OmniMovementComponent(AttemptToReconnectTheOmni) - Successfully found the Omni for reconnect.");
             omniFound = true;
         }
         else
@@ -287,6 +431,15 @@ public class OmniMovementComponent : MonoBehaviour {
         {
             OmniCommon.Messages.OmniBaseMessage obm = OmniCommon.OmniPacketBuilder.decodePacket(packet);
 
+            if (debugNotReceivingData == true || hasReceivedOmniData == false)
+            {
+                Debug.Log(System.DateTime.Now.ToLongTimeString() + ": OmniMovementComponent(ReadOmniData) - During this frame, the Omni started reading data from the Omni data packet.");
+                debugNotReceivingData = false;
+                StartCoroutine(ConfigureOmniConnect());
+
+            }
+            hasReceivedOmniData = true;
+
             if (obm != null)
             {
                 switch (obm.MsgType)
@@ -303,7 +456,11 @@ public class OmniMovementComponent : MonoBehaviour {
         else
         {
             motionData = null;
-            Debug.LogError(System.DateTime.Now.ToLongTimeString() + ": OmniMovementComponent(ReadOmniData) - During this frame, failed to read the Omni data packet.");
+            if (debugNotReceivingData == false)
+            {
+                Debug.LogError(System.DateTime.Now.ToLongTimeString() + ": OmniMovementComponent(ReadOmniData) - During this frame, the Omni stopped receiving valid data from the Omni data packet.");
+                debugNotReceivingData = true;
+            }
         }
 
         if (motionData != null)
@@ -424,7 +581,15 @@ public class OmniMovementComponent : MonoBehaviour {
                 if ((cameraReference.transform.position.x != 0) && (cameraReference.transform.position.y != 0) && (cameraReference.transform.position.z != 0) &&
                             (cameraReference.rotation.eulerAngles.x != 0) && (cameraReference.rotation.eulerAngles.y != 0) && (cameraReference.rotation.eulerAngles.z != 0))
                 {
-                    omniOffset = OmniMovementCalibration.GetCalibrationValue();
+                    if (mySAPStatus == SecureAuthenticationProtocolState.SAPEnabled)
+                    {
+                        //omniOffset = OVSDK.GetOmniYawOffset();
+                        omniOffset = OmniMovementCalibration.GetCalibrationValue();
+                    }
+                    else
+                    {
+                        omniOffset = OmniMovementCalibration.GetCalibrationValue();
+                    }
                     hasCalibrated = true;
                     Debug.Log(System.DateTime.Now.ToLongTimeString() + ": OmniMovementComponent(CalibrateOmni) - Successfully calibrated Omni.");
                 }
@@ -460,12 +625,23 @@ public class OmniMovementComponent : MonoBehaviour {
         if (currentOmniYaw > 360f) currentOmniYaw -= 360f;
         if (currentOmniYaw < 0f) currentOmniYaw += 360f;
 
-        //Get the coupling percentage from System
+        //Get the coupling percentage from Omniverse
         if (hasSetCouplingPercentage == false)
         {
-            couplingPercentage = developerMode ? 1.0f : OmniMovementCalibration.GetCouplingPercentage();
-            hasSetCouplingPercentage = true;
+            if (mySAPStatus == SecureAuthenticationProtocolState.SAPEnabled)
+            {
+                //couplingPercentage = developerMode ? 1.0f : OVSDK.GetOmniCoupleRate();
+                couplingPercentage = developerMode ? 1.0f : OmniMovementCalibration.GetCouplingPercentage();
+                hasSetCouplingPercentage = true;
+            }
+            else
+            {
+                couplingPercentage = developerMode ? 1.0f : OmniMovementCalibration.GetCouplingPercentage();
+                hasSetCouplingPercentage = true;
+            }
+            Debug.Log(System.DateTime.Now.ToLongTimeString() + ": OmniMovementComponent(GetOmniInputForCharacterMovement) - Coupling Percentage = " + couplingPercentage);
         }
+
 
         //calculate forward rotation
         forwardRotation = (currentOmniYaw - omniOffset + transform.rotation.eulerAngles.y) + (angleBetweenOmniAndCamera * couplingPercentage);

@@ -43,8 +43,7 @@ GameObject:
   - component: {fileID: 54000010204227658}
   - component: {fileID: 143000013197982616}
   - component: {fileID: 114000010963845762}
-  - component: {fileID: 114000012211966920}
-  - component: {fileID: 114000014200475062}
+  - component: {fileID: 114000011486231928}
   m_Layer: 8
   m_Name: OmniCharacterController
   m_TagString: Player
@@ -114,10 +113,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4816de52c8590048a0c0dc7a647cbb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSpeed: 10
+  maxSpeed: 7
   strafeSpeedMultiplier: 1
   backwardsSpeedMultiplier: 0.4
-  gravityMultiplier: 1
+  gravityMultiplier: 0.8
   couplingPercentage: 1
   developerMode: 0
   hidInput: {x: 0, y: 0}
@@ -128,7 +127,7 @@ MonoBehaviour:
   omniFound: 0
   cameraReference: {fileID: 4000011557633224}
   dummyObject: {fileID: 4000011615638566}
---- !u!114 &114000012211966920
+--- !u!114 &114000011486231928
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -138,18 +137,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee798ae13c81b874cb4936d55d659261, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114000014200475062
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1000011639520514}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb5b94bfdf5f87a408eb56df812d1506, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1000012324955648
@@ -214,6 +201,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -236,7 +224,8 @@ MonoBehaviour:
 
     Omni Yaw: 500
 
-    Step Count: 13249225902
+    Step Count:
+    13249225902
 
     Calibrated: '
 --- !u!114 &114000010731870442
@@ -537,6 +526,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

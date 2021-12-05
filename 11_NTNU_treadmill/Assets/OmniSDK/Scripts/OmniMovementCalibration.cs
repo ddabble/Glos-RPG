@@ -2,7 +2,6 @@
 using Microsoft.Win32;
 using System;
 using System.Collections;
-using System.Globalization;
 
 public class OmniMovementCalibration : MonoBehaviour {
 
@@ -18,7 +17,7 @@ public class OmniMovementCalibration : MonoBehaviour {
         }
         else
         {
-            consumerCalibrationValue = Convert.ToSingle(calibrationKey.GetValue(""), CultureInfo.InvariantCulture);
+            consumerCalibrationValue = Convert.ToSingle(calibrationKey.GetValue(""));
             calibrationKey.Close();
         }
 
@@ -41,11 +40,11 @@ public class OmniMovementCalibration : MonoBehaviour {
         }
         else
         {
-            consumerCouplingPercentageValue = Convert.ToSingle(couplingPercentageKey.GetValue(""), CultureInfo.InvariantCulture);
+            consumerCouplingPercentageValue = Convert.ToSingle(couplingPercentageKey.GetValue(""));
             couplingPercentageKey.Close();
         }
 
-        Debug.Log(System.DateTime.Now.ToLongTimeString() + ": OmniMovementCalibration(GetCouplingPercentage) - Coupling Percentage = " + consumerCouplingPercentageValue);
+        //Debug.Log(System.DateTime.Now.ToLongTimeString() + ": OmniMovementCalibration(GetCouplingPercentage) - Coupling Percentage = " + consumerCouplingPercentageValue);
         return consumerCouplingPercentageValue;
 
     }
