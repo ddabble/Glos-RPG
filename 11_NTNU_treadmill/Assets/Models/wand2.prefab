@@ -60,10 +60,7 @@ Transform:
   m_Children:
   - {fileID: 6965980340022178662}
   - {fileID: 2084967162346597302}
-<<<<<<< HEAD
   - {fileID: 6396784587978284760}
-=======
->>>>>>> ecf63c7cf4b80fb37b96e43807a7c2e2b4d548ba
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
@@ -85,7 +82,6 @@ MonoBehaviour:
     actionPath: /actions/default/in/GrabPinch
     needsReinit: 0
   inputSource: 2
-<<<<<<< HEAD
   ejectionForce: 15
 --- !u!1 &7767336025638874360
 GameObject:
@@ -215,8 +211,6 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
-=======
->>>>>>> ecf63c7cf4b80fb37b96e43807a7c2e2b4d548ba
 --- !u!1 &8700895186966676530
 GameObject:
   m_ObjectHideFlags: 0
