@@ -17,7 +17,7 @@ public class OmniMovementCalibration : MonoBehaviour {
         }
         else
         {
-            consumerCalibrationValue = Convert.ToSingle(calibrationKey.GetValue(""));
+            consumerCalibrationValue = Convert.ToSingle(calibrationKey.GetValue(""), System.Globalization.CultureInfo.InvariantCulture);
             calibrationKey.Close();
         }
 
@@ -40,7 +40,7 @@ public class OmniMovementCalibration : MonoBehaviour {
         }
         else
         {
-            consumerCouplingPercentageValue = Convert.ToSingle(couplingPercentageKey.GetValue(""));
+            consumerCouplingPercentageValue = Convert.ToSingle(couplingPercentageKey.GetValue(""), System.Globalization.CultureInfo.InvariantCulture);
             couplingPercentageKey.Close();
         }
 
