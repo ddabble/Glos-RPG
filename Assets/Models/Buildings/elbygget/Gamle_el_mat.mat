@@ -154,12 +154,12 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _BumpMapColorSpaceOrigin: {r: -0.07116593, g: 0.12562267, b: 0.42315978, a: 0}
-    - _BumpMapColorSpaceVector1: {r: 0.9506434, g: -0.20495327, b: 0.038502127, a: 0}
-    - _BumpMapColorSpaceVector2: {r: 0.20364355, g: 0.95470756, b: 0.0539713, a: 0}
+    - _BumpMapColorSpaceOrigin: {r: -0.071190715, g: 0.12566377, b: 0.4231562, a: 0}
+    - _BumpMapColorSpaceVector1: {r: 0.9506286, g: -0.20501834, b: 0.038488444, a: 0}
+    - _BumpMapColorSpaceVector2: {r: 0.20370887, g: 0.95469195, b: 0.053987227, a: 0}
     - _BumpMapColorSpaceVector3: {r: -0.013265519, g: -0.0120579405, b: 0.2633482,
         a: 0}
-    - _BumpMapDXTScalers: {r: 1.0274876, g: 1.022834, b: 3.7884865, a: 0}
+    - _BumpMapDXTScalers: {r: 1.0274891, g: 1.0228347, b: 3.788467, a: 0}
     - _Color: {r: 0.9622642, g: 0.9622642, b: 0.9622642, a: 1}
     - _DetailAlbedoColorSpaceOrigin: {r: 0, g: 0, b: 0, a: 0}
     - _DetailAlbedoColorSpaceVector1: {r: 0, g: 0, b: 0, a: 0}
@@ -177,11 +177,10 @@ Material:
     - _EmissionColorSpaceVector2: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColorSpaceVector3: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionMapDXTScalers: {r: 0, g: 0, b: 0, a: 0}
-    - _MainTexColorSpaceOrigin: {r: 0.08794439, g: 0.023689406, b: -0.057440374, a: 0}
-    - _MainTexColorSpaceVector1: {r: 0.6122691, g: 0.6090031, b: 0.54463255, a: 0}
-    - _MainTexColorSpaceVector2: {r: -0.048205372, g: 0.054424744, b: -0.006665374,
+    - _MainTexColorSpaceOrigin: {r: 0.08796111, g: 0.023660837, b: -0.057426117, a: 0}
+    - _MainTexColorSpaceVector1: {r: 0.6122612, g: 0.6090103, b: 0.5446337, a: 0}
+    - _MainTexColorSpaceVector2: {r: -0.048191775, g: 0.05442958, b: -0.0066874665,
         a: 0}
-    - _MainTexColorSpaceVector3: {r: -0.063268915, g: -0.041627444, b: 0.11767356,
-        a: 0}
-    - _MainTexDXTScalers: {r: 0.9794592, g: 13.69704, b: 7.145982, a: 0}
+    - _MainTexColorSpaceVector3: {r: -0.06330256, g: -0.04159049, b: 0.11766943, a: 0}
+    - _MainTexDXTScalers: {r: 0.9794591, g: 13.697668, b: 7.1459427, a: 0}
   m_BuildTextureStacks: []
