@@ -2,15 +2,21 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Gamle_el_mat
-  m_Shader: {fileID: 4800000, guid: 5e38b3fb1ba97d94fa542d0e21b1b7e9, type: 3}
-  m_ShaderKeywords: _NORMALMAP _PARALLAXMAP _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
-    _STOCHASTIC_ALBEDO _STOCHASTIC_HEIGHT _STOCHASTIC_NORMAL
+  m_Shader: {fileID: 4800000, guid: d06ddbfd216ea8943a02fd1bf3b54557, type: 3}
+  m_ValidKeywords:
+  - _NORMALMAP
+  - _PARALLAXMAP
+  - _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
+  - _STOCHASTIC_ALBEDO
+  - _STOCHASTIC_HEIGHT
+  - _STOCHASTIC_NORMAL
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -128,6 +134,7 @@ Material:
         m_Texture: {fileID: 2800000, guid: cd22aeeecc5e83941a4e8d417ccdb2a9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _BumpScale: 1
     - _Cutoff: 0.5
@@ -177,3 +184,4 @@ Material:
     - _MainTexColorSpaceVector3: {r: -0.063268915, g: -0.041627444, b: 0.11767356,
         a: 0}
     - _MainTexDXTScalers: {r: 0.9794592, g: 13.69704, b: 7.145982, a: 0}
+  m_BuildTextureStacks: []

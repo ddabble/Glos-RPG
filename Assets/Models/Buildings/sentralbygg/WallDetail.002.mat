@@ -2,14 +2,16 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: WallDetail.002
-  m_Shader: {fileID: 4800000, guid: 5e38b3fb1ba97d94fa542d0e21b1b7e9, type: 3}
-  m_ShaderKeywords: 
+  m_Shader: {fileID: 4800000, guid: d06ddbfd216ea8943a02fd1bf3b54557, type: 3}
+  m_ValidKeywords:
+  - _STOCHASTIC_ALBEDO
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -84,11 +86,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTexInvT:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: a82d2c728546fe84c9ab90feea433b97, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTexT:
-        m_Texture: {fileID: 2800000, guid: cb410e44627bfca45abff7589dd6487e, type: 3}
+        m_Texture: {fileID: 2800000, guid: f687d817fbe69f343a1a8a073f48531c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -127,6 +129,7 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _BumpScale: 1
     - _Cutoff: 0.5
@@ -168,8 +171,12 @@ Material:
     - _EmissionColorSpaceVector2: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColorSpaceVector3: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionMapDXTScalers: {r: 0, g: 0, b: 0, a: 0}
-    - _MainTexColorSpaceOrigin: {r: 0, g: 0, b: 0, a: 0}
-    - _MainTexColorSpaceVector1: {r: 0, g: 0, b: 0, a: 0}
-    - _MainTexColorSpaceVector2: {r: 0, g: 0, b: 0, a: 0}
-    - _MainTexColorSpaceVector3: {r: 0, g: 0, b: 0, a: 0}
-    - _MainTexDXTScalers: {r: 0, g: 0, b: 0, a: 0}
+    - _MainTexColorSpaceOrigin: {r: -0.047711447, g: -0.0071868193, b: 0.06893273,
+        a: 0}
+    - _MainTexColorSpaceVector1: {r: 0.079424694, g: -0.02533928, b: -0.031886376,
+        a: 0}
+    - _MainTexColorSpaceVector2: {r: 0.0011782405, g: 0.046691597, b: -0.034169767,
+        a: 0}
+    - _MainTexColorSpaceVector3: {r: 0.3743488, g: 0.42549172, b: 0.5943254, a: 0}
+    - _MainTexDXTScalers: {r: 11.203399, g: 17.279778, b: 1.2176999, a: 0}
+  m_BuildTextureStacks: []
