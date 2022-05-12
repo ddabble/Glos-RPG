@@ -2,32 +2,68 @@
 #ifndef SAMPLE_STOCHASTIC_TEXTURE_2D_INCLUDED
 #define SAMPLE_STOCHASTIC_TEXTURE_2D_INCLUDED
 
-// Code based on https://www.shadertoy.com/view/Xtl3zf (from https://iquilezles.org/articles/texturerepetition/ under Technique 3)
+// Code based on https://www.shadertoy.com/view/WdVGWG
 
-float sum(float3 v)
+struct InterpNodes2
 {
-    return v.x + v.y + v.z;
+    float2 seeds;
+    float2 weights;
+};
+
+InterpNodes2 GetNoiseInterpNodes(float smoothNoise)
+{
+    const float2 globalPhases = smoothNoise * 0.5 + float2(0.5, 0.0);
+    const float2 phases = frac(globalPhases);
+    const float2 seeds = floor(globalPhases) * 2.0 + float2(0.0, 1.0);
+    const float2 weights = min(phases, 1.0 - phases) * 2.0;
+
+    const InterpNodes2 nodes = {seeds, weights};
+    return nodes;
 }
 
-void SampleStochasticTexture2D_float(UnityTexture2D Texture, float2 UV, UnitySamplerState Sampler, float Noise, out float4 RGBA)
+float3 hash33(float3 p)
 {
-    float l = Noise * 8.0;
-    float f = frac(l);
+    p = float3(
+        dot(p, float3(127.1, 311.7, 74.7)),
+        dot(p, float3(269.5, 183.3, 246.1)),
+        dot(p, float3(113.5, 271.9, 124.6))
+    );
+    return frac(sin(p) * 43758.5453123);
+}
 
-    float ia = floor(l + 0.5);
-    float ib = floor(l);
-    f = min(f, 1.0 - f) * 2.0;
+float4 GetTextureSample(UnityTexture2D Texture, UnitySamplerState Sampler, float2 UV, float seed)
+{
+    const float3 hash = hash33(float3(seed, 0.0, 0.0));
+    const float ang = hash.x * 2.0 * PI;
+    const float2x2 rotation = float2x2(cos(ang), sin(ang), -sin(ang), cos(ang));
 
-    float2 offa = sin(float2(3.0, 7.0) * ia); // can replace with any other hash
-    float2 offb = sin(float2(3.0, 7.0) * ib); // can replace with any other hash
+    return Texture.Sample(Sampler, mul(rotation, UV) + hash.yz);
+}
 
-    float2 dx = ddx(UV);
-    float2 dy = ddy(UV);
+//Qizhi Yu, Fabrice Neyret, Eric Bruneton, and Nicolas Holzschuch. 2011. 
+//Lagrangian Texture Advection: Preserving Both Spectrum and Velocity Field.
+//IEEE Transactions on Visualization and Computer Graphics 17, 11 (2011), 1612–1623
+float4 PreserveVariance(float4 linearColor, float4 meanColor, float moment2)
+{
+    return (linearColor - meanColor) / sqrt(moment2) + meanColor;
+}
 
-    float3 cola = Texture.SampleGrad(Sampler, UV + offa, dx, dy).xyz;
-    float3 colb = Texture.SampleGrad(Sampler, UV + offb, dx, dy).xyz;
+void SampleStochasticTexture2D_float(UnityTexture2D Texture, float2 UV, UnitySamplerState Sampler, float LayersCount, float Noise,
+                                     out float4 RGBA)
+{
+    float4 fragColor = 0.0;
+    const InterpNodes2 interpNodes = GetNoiseInterpNodes(Noise * LayersCount);
+    float moment2 = 0.0;
+    for (int i = 0; i < 2; i++)
+    {
+        float weight = interpNodes.weights[i];
+        moment2 += weight * weight;
+        fragColor += GetTextureSample(Texture, Sampler, UV, interpNodes.seeds[i]) * weight;
+    }
 
-    RGBA = float4(lerp(cola, colb, smoothstep(0.2, 0.8, f - 0.1 * sum(cola - colb))), 1.0);
+    const float4 meanColor = Texture.SampleLevel(Sampler, 0.0, 10.0);
+    fragColor = PreserveVariance(fragColor, meanColor, moment2);
+    RGBA = fragColor;
 }
 
 #endif //SAMPLE_STOCHASTIC_TEXTURE_2D_INCLUDED
