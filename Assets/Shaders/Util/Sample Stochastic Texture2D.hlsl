@@ -31,13 +31,14 @@ float3 hash33(float3 p)
     return frac(sin(p) * 43758.5453123);
 }
 
-float4 GetTextureSample(UnityTexture2D Texture, UnitySamplerState Sampler, float2 UV, float seed)
+float4 GetTextureSample(UnityTexture2D Texture, bool IsNormalTexture, UnitySamplerState Sampler, float2 UV, float seed)
 {
     const float3 hash = hash33(float3(seed, 0.0, 0.0));
     const float ang = hash.x * 2.0 * PI;
     const float2x2 rotation = float2x2(cos(ang), sin(ang), -sin(ang), cos(ang));
 
-    return Texture.Sample(Sampler, mul(rotation, UV) + hash.yz);
+    const float4 sample = Texture.Sample(Sampler, mul(rotation, UV) + hash.yz);
+    return IsNormalTexture ? float4(UnpackNormal(sample), 1.0) : sample;
 }
 
 //Qizhi Yu, Fabrice Neyret, Eric Bruneton, and Nicolas Holzschuch. 2011. 
@@ -48,7 +49,7 @@ float4 PreserveVariance(float4 linearColor, float4 meanColor, float moment2)
     return (linearColor - meanColor) / sqrt(moment2) + meanColor;
 }
 
-void SampleStochasticTexture2D_float(UnityTexture2D Texture, float2 UV, UnitySamplerState Sampler, float LayersCount, float Noise,
+void SampleStochasticTexture2D_float(UnityTexture2D Texture, bool IsNormalTexture, float2 UV, UnitySamplerState Sampler, float LayersCount, float Noise,
                                      out float4 RGBA)
 {
     float4 fragColor = 0.0;
@@ -58,7 +59,7 @@ void SampleStochasticTexture2D_float(UnityTexture2D Texture, float2 UV, UnitySam
     {
         float weight = interpNodes.weights[i];
         moment2 += weight * weight;
-        fragColor += GetTextureSample(Texture, Sampler, UV, interpNodes.seeds[i]) * weight;
+        fragColor += GetTextureSample(Texture, IsNormalTexture, Sampler, UV, interpNodes.seeds[i]) * weight;
     }
 
     const float4 meanColor = Texture.SampleLevel(Sampler, 0.0, 10.0);
