@@ -2,69 +2,75 @@
 #ifndef SAMPLE_STOCHASTIC_TEXTURE_2D_INCLUDED
 #define SAMPLE_STOCHASTIC_TEXTURE_2D_INCLUDED
 
-// Code based on https://www.shadertoy.com/view/WdVGWG
+// Code based on the 2019 paper by Thomas Deliot and Eric Heitz: https://drive.google.com/file/d/1QecekuuyWgw68HU9tg6ENfrCTCVIjm6l/view
+// (from https://blog.unity.com/technology/procedural-stochastic-texturing-in-unity)
 
-struct InterpNodes2
+// Compute local triangle barycentric coordinates and vertex IDs
+void TriangleGrid(float2 uv,
+                  out float w1, out float w2, out float w3,
+                  out int2 vertex1, out int2 vertex2, out int2 vertex3)
 {
-    float2 seeds;
-    float2 weights;
-};
-
-InterpNodes2 GetNoiseInterpNodes(float smoothNoise)
-{
-    const float2 globalPhases = smoothNoise * 0.5 + float2(0.5, 0.0);
-    const float2 phases = frac(globalPhases);
-    const float2 seeds = floor(globalPhases) * 2.0 + float2(0.0, 1.0);
-    const float2 weights = min(phases, 1.0 - phases) * 2.0;
-
-    const InterpNodes2 nodes = {seeds, weights};
-    return nodes;
+    // Scaling of the input
+    uv *= 3.46410162; // 2 * sqrt(3)
+    // Skew input space into simplex triangle grid
+    const float2x2 gridToSkewedGrid = float2x2(1.0, 0.0, -0.57735027, 1.15470054);
+    const float2 skewedCoord = mul(gridToSkewedGrid, uv);
+    // Compute local triangle vertex IDs and local barycentric coordinates
+    const int2 baseId = int2(floor(skewedCoord));
+    float3 temp = float3(frac(skewedCoord), 0);
+    temp.z = 1.0 - temp.x - temp.y;
+    if (temp.z > 0.0)
+    {
+        w1 = temp.z;
+        w2 = temp.y;
+        w3 = temp.x;
+        vertex1 = baseId;
+        vertex2 = baseId + int2(0, 1);
+        vertex3 = baseId + int2(1, 0);
+    }
+    else
+    {
+        w1 = - temp.z;
+        w2 = 1.0 - temp.y;
+        w3 = 1.0 - temp.x;
+        vertex1 = baseId + int2(1, 1);
+        vertex2 = baseId + int2(1, 0);
+        vertex3 = baseId + int2(0, 1);
+    }
 }
 
-float3 hash33(float3 p)
+float2 hash(float2 p)
 {
-    p = float3(
-        dot(p, float3(127.1, 311.7, 74.7)),
-        dot(p, float3(269.5, 183.3, 246.1)),
-        dot(p, float3(113.5, 271.9, 124.6))
-    );
-    return frac(sin(p) * 43758.5453123);
+    return frac(sin(mul(float2x2(127.1, 311.7, 269.5, 183.3), p)) * 43758.5453);
 }
 
-float4 GetTextureSample(UnityTexture2D Texture, bool IsNormalTexture, UnitySamplerState Sampler, float2 UV, float seed)
+float4 ProceduralTilingAndBlending(UnityTexture2D Texture, float2 UV, UnitySamplerState Sampler)
 {
-    const float3 hash = hash33(float3(seed, 0.0, 0.0));
-    const float ang = hash.x * 2.0 * PI;
-    const float2x2 rotation = float2x2(cos(ang), sin(ang), -sin(ang), cos(ang));
-
-    const float4 sample = Texture.Sample(Sampler, mul(rotation, UV) + hash.yz);
-    return IsNormalTexture ? float4(UnpackNormal(sample), 1.0) : sample;
+    // Get triangle info
+    float w1, w2, w3;
+    int2 vertex1, vertex2, vertex3;
+    TriangleGrid(UV, w1, w2, w3, vertex1, vertex2, vertex3);
+    // Assign random offset to each triangle vertex
+    const float2 uv1 = UV + hash(vertex1);
+    const float2 uv2 = UV + hash(vertex2);
+    const float2 uv3 = UV + hash(vertex3);
+    // Precompute UV derivatives
+    const float2 dUVdx = ddx(UV);
+    const float2 dUVdy = ddy(UV);
+    // Fetch inputs
+    const float4 I1 = Texture.SampleGrad(Sampler, uv1, dUVdx, dUVdy);
+    const float4 I2 = Texture.SampleGrad(Sampler, uv2, dUVdx, dUVdy);
+    const float4 I3 = Texture.SampleGrad(Sampler, uv3, dUVdx, dUVdy);
+    // Linear blending
+    float4 color = w1 * I1 + w2 * I2 + w3 * I3;
+    return color;
 }
 
-//Qizhi Yu, Fabrice Neyret, Eric Bruneton, and Nicolas Holzschuch. 2011. 
-//Lagrangian Texture Advection: Preserving Both Spectrum and Velocity Field.
-//IEEE Transactions on Visualization and Computer Graphics 17, 11 (2011), 1612–1623
-float4 PreserveVariance(float4 linearColor, float4 meanColor, float moment2)
-{
-    return (linearColor - meanColor) / sqrt(moment2) + meanColor;
-}
-
-void SampleStochasticTexture2D_float(UnityTexture2D Texture, bool IsNormalTexture, float2 UV, UnitySamplerState Sampler, float LayersCount, float Noise,
+void SampleStochasticTexture2D_float(UnityTexture2D Texture, bool IsNormalTexture, float2 UV, UnitySamplerState Sampler,
                                      out float4 RGBA)
 {
-    float4 fragColor = 0.0;
-    const InterpNodes2 interpNodes = GetNoiseInterpNodes(Noise * LayersCount);
-    float moment2 = 0.0;
-    for (int i = 0; i < 2; i++)
-    {
-        float weight = interpNodes.weights[i];
-        moment2 += weight * weight;
-        fragColor += GetTextureSample(Texture, IsNormalTexture, Sampler, UV, interpNodes.seeds[i]) * weight;
-    }
-
-    const float4 meanColor = Texture.SampleLevel(Sampler, 0.0, 10.0);
-    fragColor = PreserveVariance(fragColor, meanColor, moment2);
-    RGBA = fragColor;
+    float4 fragColor = ProceduralTilingAndBlending(Texture, UV, Sampler);
+    RGBA = IsNormalTexture ? float4(UnpackNormal(fragColor), 1.0) : fragColor;
 }
 
 #endif //SAMPLE_STOCHASTIC_TEXTURE_2D_INCLUDED

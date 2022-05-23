@@ -242,7 +242,7 @@
     },
     "m_Name": "Sample Stochastic Texture2D",
     "m_DrawState": {
-        "m_Expanded": false,
+        "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
             "x": -579.0,
@@ -263,9 +263,6 @@
         },
         {
             "m_Id": "70e7890a73b14de98a8d366d28ae615f"
-        },
-        {
-            "m_Id": "6a560e055ed743dc874c3b75a60ee3c1"
         },
         {
             "m_Id": "f757b12d7b5f463e9da2490bf7e605e1"
@@ -629,21 +626,6 @@
     "useTilingAndOffset": false,
     "m_Modifiable": true,
     "m_DefaultType": 0
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
-    "m_ObjectId": "6a560e055ed743dc874c3b75a60ee3c1",
-    "m_Id": 1588621111,
-    "m_DisplayName": "LayersCount",
-    "m_SlotType": 0,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "_LayersCount",
-    "m_StageCapability": 3,
-    "m_Value": 10.0,
-    "m_DefaultValue": 0.0,
-    "m_Labels": []
 }
 
 {
