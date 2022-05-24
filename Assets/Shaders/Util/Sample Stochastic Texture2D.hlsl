@@ -48,7 +48,8 @@ void TriangleGrid(float2 uv,
 
 float2 hash(float2 p)
 {
-    return frac(sin(mul(float2x2(127.1, 311.7, 269.5, 183.3), p)) * 43758.5453);
+    // Code based on https://github.com/needle-tools/procedural-stochastic-texturing/blob/e6ec73823d432405d1e4e5c79f3e9591a6df14d4/package/Editor/TilingAndBlending/ProceduralTexturingSimple.cginc#L24
+    return frac(sin(fmod(float2(dot(p, float2(127.1, 311.7)), dot(p, float2(269.5, 183.3))), PI)) * 43758.5453);
 }
 
 float4 ProceduralTilingAndBlending(UnityTexture2D Texture, float2 UV, UnitySamplerState Sampler)
