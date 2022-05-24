@@ -7,8 +7,7 @@
 
 // Compute local triangle barycentric coordinates and vertex IDs
 void TriangleGrid(float2 uv,
-                  out float w1, out float w2, out float w3,
-                  out int2 vertex1, out int2 vertex2, out int2 vertex3)
+                  out float3 weights, out int3x2 vertices)
 {
     // Scaling of the input
     uv *= 3.46410162; // 2 * sqrt(3)
@@ -21,21 +20,29 @@ void TriangleGrid(float2 uv,
     temp.z = 1.0 - temp.x - temp.y;
     if (temp.z > 0.0)
     {
-        w1 = temp.z;
-        w2 = temp.y;
-        w3 = temp.x;
-        vertex1 = baseId;
-        vertex2 = baseId + int2(0, 1);
-        vertex3 = baseId + int2(1, 0);
+        weights = float3(
+            temp.z,
+            temp.y,
+            temp.x
+        );
+        vertices = int3x2(
+            baseId,
+            baseId + int2(0, 1),
+            baseId + int2(1, 0)
+        );
     }
     else
     {
-        w1 = - temp.z;
-        w2 = 1.0 - temp.y;
-        w3 = 1.0 - temp.x;
-        vertex1 = baseId + int2(1, 1);
-        vertex2 = baseId + int2(1, 0);
-        vertex3 = baseId + int2(0, 1);
+        weights = float3(
+            -temp.z,
+            1.0 - temp.y,
+            1.0 - temp.x
+        );
+        vertices = int3x2(
+            baseId + int2(1, 1),
+            baseId + int2(1, 0),
+            baseId + int2(0, 1)
+        );
     }
 }
 
@@ -47,22 +54,27 @@ float2 hash(float2 p)
 float4 ProceduralTilingAndBlending(UnityTexture2D Texture, float2 UV, UnitySamplerState Sampler)
 {
     // Get triangle info
-    float w1, w2, w3;
-    int2 vertex1, vertex2, vertex3;
-    TriangleGrid(UV, w1, w2, w3, vertex1, vertex2, vertex3);
+    float3 weights;
+    int3x2 vertices;
+    TriangleGrid(UV, weights, vertices);
     // Assign random offset to each triangle vertex
-    const float2 uv1 = UV + hash(vertex1);
-    const float2 uv2 = UV + hash(vertex2);
-    const float2 uv3 = UV + hash(vertex3);
+    const float3x2 uvs = float3x2(
+        UV + hash(vertices[0]),
+        UV + hash(vertices[1]),
+        UV + hash(vertices[2])
+    );
     // Precompute UV derivatives
     const float2 dUVdx = ddx(UV);
     const float2 dUVdy = ddy(UV);
     // Fetch inputs
-    const float4 I1 = Texture.SampleGrad(Sampler, uv1, dUVdx, dUVdy);
-    const float4 I2 = Texture.SampleGrad(Sampler, uv2, dUVdx, dUVdy);
-    const float4 I3 = Texture.SampleGrad(Sampler, uv3, dUVdx, dUVdy);
+    const float3x4 inputs = float3x4(
+        SAMPLE_TEXTURE2D_GRAD(Texture, Sampler, uvs[0], dUVdx, dUVdy),
+        SAMPLE_TEXTURE2D_GRAD(Texture, Sampler, uvs[1], dUVdx, dUVdy),
+        SAMPLE_TEXTURE2D_GRAD(Texture, Sampler, uvs[2], dUVdx, dUVdy)
+    );
     // Linear blending
-    float4 color = w1 * I1 + w2 * I2 + w3 * I3;
+    // (weights[0] * input[0] + weights[1] * input[1] + weights[2] * input[2])
+    float4 color = mul(transpose(inputs), weights);
     return color;
 }
 
