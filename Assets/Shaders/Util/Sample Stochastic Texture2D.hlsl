@@ -52,7 +52,7 @@ float2 hash(float2 p)
     return frac(sin(fmod(float2(dot(p, float2(127.1, 311.7)), dot(p, float2(269.5, 183.3))), PI)) * 43758.5453);
 }
 
-float4 ProceduralTilingAndBlending(UnityTexture2D Texture, float2 UV, UnitySamplerState Sampler)
+float4 ProceduralTilingAndBlending(UnityTexture2D Texture, float2 UV, UnitySamplerState Sampler, float Blend)
 {
     // Get triangle info
     float3 weights;
@@ -73,21 +73,23 @@ float4 ProceduralTilingAndBlending(UnityTexture2D Texture, float2 UV, UnitySampl
         SAMPLE_TEXTURE2D_GRAD(Texture, Sampler, uvs[1], dUVdx, dUVdy),
         SAMPLE_TEXTURE2D_GRAD(Texture, Sampler, uvs[2], dUVdx, dUVdy)
     );
+
+    // Weight blending
+    // Code based on https://github.com/needle-tools/procedural-stochastic-texturing/blob/af2b2a17d2ebb1493b52f46f2cfeef581231ed97/package/Editor/TilingAndBlending/ProceduralTexturingSimple.cginc#L47-L49
+    weights = pow(weights, 1.0 + Blend * 15);
+    const float sum = weights.x + weights.y + weights.z;
+    weights /= sum;
+
     // Linear blending
     // (weights[0] * input[0] + weights[1] * input[1] + weights[2] * input[2])
     float4 color = mul(transpose(inputs), weights);
-
-    // Variance-preserving blending
-    // Code based on the paper mentioned at the beginning of the file, and https://www.shadertoy.com/view/WdVGWG by Shadertoy user Suslik
-    const float4 meanColor = Texture.SampleLevel(Sampler, 0.0, 10.0);
-    color = (color - meanColor) / sqrt(dot(weights, weights)) + meanColor;
     return color;
 }
 
-void SampleStochasticTexture2D_float(UnityTexture2D Texture, bool IsNormalTexture, float2 UV, UnitySamplerState Sampler,
+void SampleStochasticTexture2D_float(UnityTexture2D Texture, bool IsNormalTexture, float2 UV, UnitySamplerState Sampler, float Blend,
                                      out float4 RGBA)
 {
-    float4 fragColor = ProceduralTilingAndBlending(Texture, UV, Sampler);
+    float4 fragColor = ProceduralTilingAndBlending(Texture, UV, Sampler, Blend);
     RGBA = IsNormalTexture ? float4(UnpackNormal(fragColor), 1.0) : fragColor;
 }
 
