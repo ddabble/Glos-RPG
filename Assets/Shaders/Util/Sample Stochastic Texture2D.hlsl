@@ -75,6 +75,11 @@ float4 ProceduralTilingAndBlending(UnityTexture2D Texture, float2 UV, UnitySampl
     // Linear blending
     // (weights[0] * input[0] + weights[1] * input[1] + weights[2] * input[2])
     float4 color = mul(transpose(inputs), weights);
+
+    // Variance-preserving blending
+    // Code based on the paper mentioned at the beginning of the file, and https://www.shadertoy.com/view/WdVGWG by Shadertoy user Suslik
+    const float4 meanColor = Texture.SampleLevel(Sampler, 0.0, 10.0);
+    color = (color - meanColor) / sqrt(dot(weights, weights)) + meanColor;
     return color;
 }
 
