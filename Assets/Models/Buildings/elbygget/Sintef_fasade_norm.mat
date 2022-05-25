@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-2380606169173958338
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 5
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -8,23 +21,26 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Sintef_fasade_norm
-  m_Shader: {fileID: 4800000, guid: d06ddbfd216ea8943a02fd1bf3b54557, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 0c965248cdb90e9438a363e17ecc4c3e,
+    type: 3}
   m_ValidKeywords:
-  - _NORMALMAP
-  - _PARALLAXMAP
-  - _STOCHASTIC_ALBEDO
-  - _STOCHASTIC_HEIGHT
-  - _STOCHASTIC_NORMAL
+  - _NORMAL_MAP_IS_SET
+  - _SMOOTHNESS_SOURCE_SPECULAR_METALLIC_ALPHA
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
-  stringTagMap: {}
+  stringTagMap:
+    RenderType: Opaque
   disabledShaderPasses: []
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _Base_Map:
+        m_Texture: {fileID: 2800000, guid: 719f4a730207c44429a7ae49177940fc, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 2800000, guid: f49dd1f2234f1c2469701b6e63398060, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -109,6 +125,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Normal_Map:
+        m_Texture: {fileID: 2800000, guid: f49dd1f2234f1c2469701b6e63398060, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -118,6 +138,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMapT:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Occlusion_Map:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -133,9 +157,29 @@ Material:
         m_Texture: {fileID: 2800000, guid: 5f8d09f3d29f28245abb9d7b59ed6755, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Specular_Metallic_Map:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AlphaClip: 0
+    - _Blend: 0
     - _BumpScale: 1
+    - _CastShadows: 1
+    - _Cull: 2
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
@@ -143,15 +187,30 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 1
     - _Metallic: 0
+    - _Metallic_Default: 0
     - _Mode: 0
+    - _NORMAL_MAP_IS_SET: 1
+    - _Normal_Scale: 1
     - _OcclusionStrength: 1
+    - _Occlusion_Map_Strength: 1
     - _Parallax: 0.005
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _ReceiveShadows: 1
+    - _SMOOTHNESS_SOURCE: 0
+    - _SPECULAR_METALLIC_MAP_IS_SET: 0
+    - _SamplingBlend: 0
+    - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _StochasticInputSelected: -1
+    - _Surface: 0
     - _UVSec: 0
+    - _WorkflowMode: 1
+    - _ZTest: 4
     - _ZWrite: 1
+    - _ZWriteControl: 0
     m_Colors:
     - _BumpMapColorSpaceOrigin: {r: 0.016659796, g: -0.009525192, b: 0.3907209, a: 0}
     - _BumpMapColorSpaceVector1: {r: 0.9982127, g: 0.018248646, b: 0.08075503, a: 0}
@@ -182,4 +241,8 @@ Material:
     - _MainTexColorSpaceVector3: {r: -0.010241562, g: -0.07544859, b: 0.07660529,
         a: 0}
     - _MainTexDXTScalers: {r: 0.60490954, g: 3.2150192, b: 9.258565, a: 0}
+    - _Offset: {r: 0, g: 0, b: 0, a: 0}
+    - _Specular_Default: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+    - _Tiling: {r: 2, g: 1, b: 0, a: 0}
+    - _Tint: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
