@@ -50,10 +50,17 @@
         },
         {
             "m_Id": "6e842cc60c5f49af89b43eabc3c6a9f4"
+        },
+        {
+            "m_Id": "5a79427d8f604de5bde22fa446e002f2"
         }
     ],
     "m_GroupDatas": [],
-    "m_StickyNoteDatas": [],
+    "m_StickyNoteDatas": [
+        {
+            "m_Id": "a1b70d40be1c4a689c43e8f1aec85065"
+        }
+    ],
     "m_Edges": [
         {
             "m_OutputSlot": {
@@ -109,6 +116,20 @@
                     "m_Id": "024bcde3ae894e3b87047fedc6c6e567"
                 },
                 "m_SlotId": 2
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "5a79427d8f604de5bde22fa446e002f2"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "024bcde3ae894e3b87047fedc6c6e567"
+                },
+                "m_SlotId": 3
             }
         },
         {
@@ -193,20 +214,6 @@
                     "m_Id": "ac8c985016114aadb3cbf833e2755d3f"
                 },
                 "m_SlotId": 5
-            }
-        },
-        {
-            "m_OutputSlot": {
-                "m_Node": {
-                    "m_Id": "add63379d2f149269eac658a277c5c15"
-                },
-                "m_SlotId": 0
-            },
-            "m_InputSlot": {
-                "m_Node": {
-                    "m_Id": "024bcde3ae894e3b87047fedc6c6e567"
-                },
-                "m_SlotId": 3
             }
         }
     ],
@@ -447,6 +454,41 @@
     "m_Property": {
         "m_Id": "11f7f47e8465451c9676d57eec52b722"
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.SamplerStateNode",
+    "m_ObjectId": "5a79427d8f604de5bde22fa446e002f2",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Sampler State",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": -16.99998664855957,
+            "y": 366.0,
+            "width": 145.0,
+            "height": 138.0
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "e05c95a55ed940c798ad1265d4fa545d"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_filter": 2,
+    "m_wrap": 0,
+    "m_aniso": 4
 }
 
 {
@@ -802,6 +844,26 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.StickyNoteData",
+    "m_ObjectId": "a1b70d40be1c4a689c43e8f1aec85065",
+    "m_Title": "",
+    "m_Content": "Shader Graph doesn't properly use the texture's sampler state when sampling using `Texture.SampleGrad()` or `SAMPLE_TEXTURE2D_GRAD()`\n(https://forum.unity.com/threads/expose-samplerstate-from-texture.838213/ seems to be related),\nso have to manually create a sampler state, to use anything other than the default of bilinear with no anisotropic filtering",
+    "m_TextSize": 0,
+    "m_Theme": 0,
+    "m_Position": {
+        "serializedVersion": "2",
+        "x": -117.0,
+        "y": 209.0,
+        "width": 245.0,
+        "height": 155.0
+    },
+    "m_Group": {
+        "m_Id": ""
+    }
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector2MaterialSlot",
     "m_ObjectId": "aa8641a20a1b46ae94b33ff1f0b878ad",
     "m_Id": 2,
@@ -1024,6 +1086,19 @@
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
     "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.SamplerStateMaterialSlot",
+    "m_ObjectId": "e05c95a55ed940c798ad1265d4fa545d",
+    "m_Id": 0,
+    "m_DisplayName": "Out",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_BareResource": false
 }
 
 {
