@@ -443,9 +443,6 @@
             "m_Id": "d31f9183959b4570a0285580427a4f02"
         },
         {
-            "m_Id": "abd5976e0a7d47e28ed7cec3eb93b50e"
-        },
-        {
             "m_Id": "9a04ae75af144f9a86e2c7e031d912c7"
         },
         {
@@ -1109,6 +1106,20 @@
                     "m_Id": "c68612f057d94d4991037baf09885cca"
                 },
                 "m_SlotId": 1838967915
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "9ac769a7d2dc414f8634a8d17b359f3a"
+                },
+                "m_SlotId": 1
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "4d3f95b3795c4a5d9b36186f4ca7a681"
+                },
+                "m_SlotId": -1586750893
             }
         },
         {
@@ -1893,6 +1904,34 @@
                     "m_Id": "2f28052ddee94d8ca01da7013ae802c2"
                 },
                 "m_SlotId": 1569147493
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "fe88c67e9db34a278ce749fb27f56cd1"
+                },
+                "m_SlotId": 5
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "6d8d1a5f154c468fb88be7999fa2668a"
+                },
+                "m_SlotId": -1586750893
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "ff3d0538517040ca9447a7bb3f70298f"
+                },
+                "m_SlotId": 1
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "065299fe36f545d89b467b124649a41e"
+                },
+                "m_SlotId": -1586750893
             }
         }
     ],
@@ -6952,7 +6991,7 @@
     },
     "m_Name": "Terrain Texture Painting",
     "m_DrawState": {
-        "m_Expanded": false,
+        "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
             "x": -996.0000610351563,
@@ -7745,26 +7784,6 @@
         "z": 0.0
     },
     "m_Labels": []
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.StickyNoteData",
-    "m_ObjectId": "abd5976e0a7d47e28ed7cec3eb93b50e",
-    "m_Title": "",
-    "m_Content": "Had to not sample the fourth terrain layer, as more than 16 texture samplers were initialized in the same shader - somehow - which is apparently the limit of URP shaders",
-    "m_TextSize": 0,
-    "m_Theme": 0,
-    "m_Position": {
-        "serializedVersion": "2",
-        "x": -806.0,
-        "y": -692.0,
-        "width": 200.0,
-        "height": 160.0
-    },
-    "m_Group": {
-        "m_Id": "fbfaaf026a6f48f28055201b3d017800"
-    }
 }
 
 {
@@ -11022,7 +11041,7 @@
     },
     "m_Name": "Terrain Normal Painting",
     "m_DrawState": {
-        "m_Expanded": false,
+        "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
             "x": -1032.0,
