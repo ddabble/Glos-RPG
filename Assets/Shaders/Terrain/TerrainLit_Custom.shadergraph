@@ -447,6 +447,9 @@
         },
         {
             "m_Id": "baa772b5818f41ac899c7aa9ecc9d9f6"
+        },
+        {
+            "m_Id": "05b4c295dcae46758974b335c8f7d059"
         }
     ],
     "m_Edges": [
@@ -1855,7 +1858,7 @@
                 "m_Node": {
                     "m_Id": "ea24d2b4847c44779b35feb5b3a8ffe9"
                 },
-                "m_SlotId": 0
+                "m_SlotId": 4
             },
             "m_InputSlot": {
                 "m_Node": {
@@ -2157,6 +2160,26 @@
         "w": 0.0
     },
     "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.StickyNoteData",
+    "m_ObjectId": "05b4c295dcae46758974b335c8f7d059",
+    "m_Title": "",
+    "m_Content": "When no holes have been painted, the red value seems to default to approx. 0.216, so the Alpha Clip Threshold should be lower than that",
+    "m_TextSize": 0,
+    "m_Theme": 0,
+    "m_Position": {
+        "serializedVersion": "2",
+        "x": 1.0,
+        "y": 581.0,
+        "width": 173.0,
+        "height": 100.0
+    },
+    "m_Group": {
+        "m_Id": ""
+    }
 }
 
 {
@@ -9973,7 +9996,7 @@
     "m_Hidden": false,
     "m_ShaderOutputName": "AlphaClipThreshold",
     "m_StageCapability": 2,
-    "m_Value": 0.5,
+    "m_Value": 0.10000000149011612,
     "m_DefaultValue": 0.5,
     "m_Labels": []
 }
